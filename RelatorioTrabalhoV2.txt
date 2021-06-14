@@ -1,0 +1,47 @@
+Trabalho V2
+
+Nome: João Alberto Parente Filho
+RA: 1710379
+Curso: Ciências da Computação
+Disciplina: Redes de Computadores 2
+
+
+Neste relatório irei explicar meu código e como cheguei ao valor da quantidade de perdas e porcentagem da mesma.
+
+Primeiramente para executar o código é necessário baixar código do diretório do git com o link a seguir: 
+https://github.com/AlbertoParente/trabalho-redesV2.git
+Após código baixado executar o seguinte comando no terminal: node main.js
+
+Caso prefira segue link do repositório para visualização no próprio github:
+https://github.com/AlbertoParente/trabalho-redesV2
+
+
+Utilizei nodeJS para codificar o trabalho onde primeiramente utilizei a conversão dos dados de csv para JSON, pois trabalhar com chave e valor em javascript é bem melhor, que com o tipo de dados que foi impostos, em seguida criei um array dos dados para ser percorrido, declarei as variáveis iniciais onde algumas atribui valores iniciais como orientado na ultima aula. 
+Após a declaração das variáveis necessárias, criei um laço while onde o mesmo irar percorrer todos os dados, calculando as informações necessárias para obter a taxa de perda, onde para isso criei duas variáveis que receberam o receiver_timestamp e o sender_timestamp(tempoReceiverCalc, tempoSenderCalc) utilizei o parseFlot nelas pois seu tipo estava como string, fazendo assim com que, quando utilizadas sem o parserFloat houvesse divergência de valores, não chegando assim nos valores corretos. 
+
+Primeiro if ele verifica o tipo de dado se é: 
+	• D "Chegada de um novo pacote", 
+	• ! "Inicio de uma nova rajada de fala" 
+
+onde se o tipo for diferente de "!" ele vai entrar e calcular o: 
+	• di = "Atraso na rede para i° pacote" ri - ti (tempoReceiverCalc - tempoSenderCalc), 
+	• diLinha = "estimativa do atraso médio da rede após receber i° pacote" ((1 - U) * valorAnteriorDi + U * di)), 
+	• vi = Math.abs(diLinha - di) que é o modulo de |di - ^di|
+	• viLinha = ((1 - U) * valorAnteriorVi + U * vi)
+
+em seguida verifico em um if se é a linha inicial de uma rajada, caso seja, seto linhaInicialRajada = false e calculo o pi = (4 * viLinha) + tempoSenderCalc + diLinha, caso contrario entro no else e calculo o pi + 160
+
+no próximo if verifico se o pi é < que o tempoReceiverCalc, caso seja, atribuo mais 1 a variável countErro contabilizando assim um erro de transmissão 
+
+em seguida atribuo o valor do diLinha no valorAnteriorDi e o viLinha no valorAnteriorVi para que assim eu consiga calcular a próxima linha com os seus valores devidos.
+
+E se caso no primeiro if o valor do tipo for "!" irar cair no else atribuindo a variável linhaInicialRajada = true fazendo com que indique que a próxima linha é um inicio de uma nova rajada fazendo assim com que na próxima linha entre no primeiro if e calcule os seus devidos valores.
+
+Conclusão:
+Apos ler e calcular todos os dados foi definido que a Quantidades de pacotes perdidos é de: 2577 e a Taxa de pacotes perdidos é de: 6,75%
+
+
+Considerações finais:
+Tentei deixar o código o mais descritivo o possível, para que possa ajudar na leitura do mesmo e espero assim que eu tenha conseguido chegar na expectativa desejada.
+
+Desde já agradeço a atenção.
